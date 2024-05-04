@@ -3,16 +3,30 @@ import { FaLinkedinIn } from "react-icons/fa6";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { FaFacebookF } from "react-icons/fa";
+import UseAuth from "../../Hooks/UseAuth";
+
 
 
 const SignUp = () => {
 
+    const { createUser } = UseAuth() || {};
+
     const handleSignUp = e => {
         e.preventDefault();
         const form = e.target;
+        const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password)
+        console.log(name, email, password)
+
+        createUser (email, password) 
+        .then(result => {
+            const user = result.user;
+            console.log(user)
+        })
+        .then(error =>{
+            console.log(error)
+        })
     }
 
     return (
@@ -26,6 +40,12 @@ const SignUp = () => {
                     <form onSubmit={handleSignUp} className="card-body">
                         <div className="form-control">
                             <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input type="text" name='name' placeholder="name" className="input input-bordered" required />
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
                             <input type="email" name='email' placeholder="email" className="input input-bordered" required />
@@ -35,7 +55,7 @@ const SignUp = () => {
                                 <span className="label-text">Password</span>
                             </label>
                             <input type="password" name="password" placeholder="password" className="input input-bordered" required />
-                            
+
                         </div>
                         <div className="form-control mt-6">
                             <button className="btn bg-red-500 text-white">Sign up</button>
@@ -64,7 +84,7 @@ const SignUp = () => {
 
         </div>
     );
-    
+
 };
 
 export default SignUp;

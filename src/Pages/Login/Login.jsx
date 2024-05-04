@@ -3,9 +3,13 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import UseAuth from '../../Hooks/UseAuth';
+
 
 
 const Login = () => {
+
+    const { signIn } = UseAuth();
 
     const handleLogin = e => {
         e.preventDefault();
@@ -13,6 +17,14 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password)
+
+        signIn (email, password)
+        .then(result =>{
+            console.loh(result.user)
+        })
+        .catch(error =>{
+            console.error(error)
+        })
     }
 
 
